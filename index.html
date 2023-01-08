@@ -59,10 +59,10 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://CserYcx.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://CserYcx.github.io"></form>
       </div>
     </div>
   </div>
@@ -71,6 +71,66 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-PA1 summary" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022-12-23/PA1%20summary.html" class="article-date">
+  <time class="dt-published" datetime="2022-12-23T07:18:11.732Z" itemprop="datePublished">2022-12-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PA/">PA</a>►<a class="article-category-link" href="/categories/PA/PA1/">PA1</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022-12-23/PA1%20summary.html">PA1 - 最后的总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PA1-总结"><a href="#PA1-总结" class="headerlink" title="PA1 总结"></a>PA1 总结</h1><p>PA1终于算是做完了（虽然还有一些小的问题没有解决），所以总结一下遇到的问题以及已经开始的PA2中的一些知识点</p>
+<h3 id="查阅所有的c文件行数的命令："><a href="#查阅所有的c文件行数的命令：" class="headerlink" title="查阅所有的c文件行数的命令："></a>查阅所有的c文件行数的命令：</h3><p>wc -l filename 可以查看文件行数，但是如果我们要对一个目录下查看所有c文件的行数我们则用如下命令组合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; -o -name &quot;*.h&quot; | xargs wc -l</span><br></pre></td></tr></table></figure>
+<p>如果要去掉空格的行数，则是：(grep -v 这里我也没太懂)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; -o -name &quot;*.h&quot; | xargs cat|grep -v ^$| wc -l</span><br><span class="line">其中 -v  显示不包含匹配文本的所有行。</span><br><span class="line">^：匹配正则表达式的开始行。</span><br><span class="line">$: 匹配正则表达式的结束行。</span><br></pre></td></tr></table></figure>
+
+<h3 id="c语言struct中位域操作："><a href="#c语言struct中位域操作：" class="headerlink" title="c语言struct中位域操作："></a>c语言struct中位域操作：</h3><p>位域是一种数据结构，可以把数据以二进制位的形式紧凑的存储，它允许程序对此结构的位进行操作<br>例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="type">uint8_t</span> rs : <span class="number">2</span>, rt : <span class="number">2</span>, op : <span class="number">4</span>; &#125; rtype;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="type">uint8_t</span> addr : <span class="number">4</span>      , op : <span class="number">4</span>; &#125; mtype;</span><br><span class="line">  <span class="type">uint8_t</span> inst;</span><br><span class="line">&#125; <span class="type">inst_t</span>;</span><br></pre></td></tr></table></figure>
+<p>图中rs : 2 就是位域操作（rs最大表示bit表示数）<br>这是PA2.1简单模拟器程序的一个例子，通过union模拟指令等长，然后再通过位域和结构体模拟不同类型的指令（十分巧妙，值得学习的例子）</p>
+<h2 id="riscv-32的一些基本知识"><a href="#riscv-32的一些基本知识" class="headerlink" title="riscv-32的一些基本知识"></a>riscv-32的一些基本知识</h2><h3 id="Base-Instruction-Format"><a href="#Base-Instruction-Format" class="headerlink" title="Base Instruction Format:"></a>Base Instruction Format:</h3><pre><code>R-type funct7 rs2 rs1 funct3 rd opcode 
+I-type imm[11:0] rs1 funct3 rd opcode 
+S-type
+U-type
+(前面四种是基本格式)
+B-type
+J-type
+(B/J是两种变体)
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://cserycx.github.io/2022-12-23/PA1%20summary.html" data-id="clcng7s360003vwsv6dmoh3ii" data-title="PA1 - 最后的总结" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Nand2Teteris 0-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022-12-18/Nand2Teteris%200-3.html" class="article-date">
@@ -78,7 +138,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Nand2Teteris/">Nand2Teteris</a>►<a class="article-category-link" href="/categories/Nand2Teteris/Project0-3/">Project0-3</a>
+    <a class="article-category-link" href="/categories/Nand2Teteris/">Nand2Teteris</a>►<a class="article-category-link" href="/categories/Nand2Teteris/Project0-6/">Project0-6</a>
   </div>
 
   </div>
@@ -105,12 +165,14 @@
 </blockquote>
 <p>看完这个地方我挺激动的，完全从零开始搭建一个计算机，这也太棒了，但是同样的，我对这门课也有些自己的怀疑。（计算机组成原理这么难，从零开始搭建会不会根本不可能）但是还是抱着试一试的心态开始了这门课。</p>
 <p>结果就是：听完Section 1和完成Project 1后，很快搭建了16位的与或非门，以及16位的选择器和解复用器(Dmux),这里其实还没有什么，很快在听完了Section 2之后我发现之前对我来说神秘不已的ALU的底层结构我居然可以很快地将它搭建出来（本质是多个16位的Mux的组合），我第一次发现原来底层的原理其实也并不怎么难，然后同样的很快的听完了Section 3之后我发现RAM我也可以实现了！！！！(时序电路的记忆功能先实现1Bit的读写然后到Register，RAM8，最后到RAM16k),<strong>我的老天爷，为什么不让我早点遇到这个课</strong>(当然我这一周就做到Projec 3,后面的课也不好说，到时候再回过头来做个总结)</p>
+<hr>
+<h2 id="Project-4-6-新的补充"><a href="#Project-4-6-新的补充" class="headerlink" title="Project 4-6(新的补充)"></a>Project 4-6(新的补充)</h2><p>到目前算是基本完成了nand2tetris的hardware部分，这其中Project5和Project6都有一定难度，第五部分主要是让你完成一个CPU,第六部分则是写一个类似于汇编语言（但是比汇编语言简单）的编译器。CPU部分主要是要注意A instruction 与　C instruction 的不同情况（选择器真的是CPU一个很重要的部分）<br>编译器主要注意下有符号时需要预处理符号表的问题，总体来说也不算太难，只要肯花时间这门课一定会让你有一个特别nice的收获！！！</p>
 <p><strong>最后只想说,Nand2Teteris值得每一个计算机专业的学生去学一学，这门课相比于学校的计算机底层理论来说将会把你的底层知识弄得无比清晰与坚实</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cserycx.github.io/2022-12-18/Nand2Teteris%200-3.html" data-id="clbtei6te0001v0svexmpgd4m" data-title="Nand2Teteris Beginning" class="article-share-link">Teilen</a>
+      <a data-url="http://cserycx.github.io/2022-12-18/Nand2Teteris%200-3.html" data-id="clcng7s320001vwsv3dq99ce9" data-title="Nand2Teteris Beginning" class="article-share-link">Share</a>
       
       
       
@@ -173,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cserycx.github.io/2022-12-09/CS61A-hw03.html" data-id="clbtei6t80000v0svbjisckky" data-title="hw03 Anonymous_factorial" class="article-share-link">Teilen</a>
+      <a data-url="http://cserycx.github.io/2022-12-09/CS61A-hw03.html" data-id="clcng7s2w0000vwsvdkmo1im6" data-title="hw03 Anonymous_factorial" class="article-share-link">Share</a>
       
       
       
@@ -241,7 +303,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cserycx.github.io/2022-11-26/PA1-regexpr.html" data-id="clbtei6ti0003v0svadgneht4" data-title="PA1 - 表达式求值" class="article-share-link">Teilen</a>
+      <a data-url="http://cserycx.github.io/2022-11-26/PA1-regexpr.html" data-id="clcng7s370004vwsv88k13j2m" data-title="PA1 - 表达式求值" class="article-share-link">Share</a>
       
       
       
@@ -283,7 +345,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://cserycx.github.io/2022-11-19/hello-world.html" data-id="clbtei6tj0004v0sv1wi98ffo" data-title="CserYcx&#39;s Hello World" class="article-share-link">Teilen</a>
+      <a data-url="http://cserycx.github.io/2022-11-19/hello-world.html" data-id="clcng7s380005vwsvd6vpcf2x" data-title="CserYcx&#39;s Hello World" class="article-share-link">Share</a>
       
       
       
@@ -303,9 +365,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Kategorien</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/">CS61A</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/hw/">hw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/">Nand2Teteris</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/Project0-3/">Project0-3</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/">PA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA1/">PA1</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/">CS61A</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/hw/">hw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/">Nand2Teteris</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/Project0-6/">Project0-6</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/">PA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA1/">PA1</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -318,7 +380,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a></li></ul>
     </div>
@@ -328,9 +390,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022-12-23/PA1%20summary.html">PA1 - 最后的总结</a>
+          </li>
         
           <li>
             <a href="/2022-12-18/Nand2Teteris%200-3.html">Nand2Teteris Beginning</a>
@@ -361,7 +427,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2022 CserYcx<br>
+      &copy; 2023 CserYcx<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
