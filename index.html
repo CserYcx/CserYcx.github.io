@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Usage of Makefile" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/Usage%20of%20Makefile/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:43:52.488Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tools/">Tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/Usage%20of%20Makefile/">About the Makefile syntax and usage</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Makefile-syntax-and-Usage"><a href="#Makefile-syntax-and-Usage" class="headerlink" title="Makefile syntax and Usage"></a>Makefile syntax and Usage</h1><p>在PA2的RTFSC（2）中，我又一次遇到了让我头痛的makefile文档，而且这一次的任务是必须完完全全的看一遍该任务的Makefile，本着提高自己makefile能力的想法，我把这几次遇到的一些比较常见的makefile的语法和函数用法记录下来</p>
+<h2 id="赋值符号"><a href="#赋值符号" class="headerlink" title="赋值符号"></a>赋值符号</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x27;=&#x27;, it is different from we normal think, it will assign its value until all the makefiles expanded</span><br><span class="line">    Example: VIR_A = A</span><br><span class="line">             VIR_B = <span class="variable">$(VIR_A)</span> B</span><br><span class="line">             VIR_A = AA</span><br><span class="line">    The final value of VIR_B is AA B</span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;:=&#x27;, it is same like the &#x27;=&#x27; in programme language, it assigning value just depends on current state</span></span><br><span class="line">    Example: VIR_A := A</span><br><span class="line">             VIR_B := <span class="variable">$(VIR_A)</span> B</span><br><span class="line">             VIR_A := AA</span><br><span class="line">    The final value of VIR_B is A B</span><br><span class="line"></span><br><span class="line">&#x27;?=&#x27;, if the variant has no value, giving it new value</span><br><span class="line">&#x27;+=&#x27;, it is same like the programme language</span><br></pre></td></tr></table></figure>
+
+<h2 id="关于-lt"><a href="#关于-lt" class="headerlink" title="关于 $@, $^, $&lt;, $?"></a>关于 $@, $^, $&lt;, $?</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&#x27;@$&#x27;: target file</span></span><br><span class="line"><span class="section">&#x27;$^&#x27;: all the dependency files of the target file</span></span><br><span class="line"><span class="section">&#x27;$&lt;&#x27;: the first dependency file in the list of dependency files of target</span></span><br><span class="line"><span class="section">&#x27;$?&#x27;: all the changed files in dependency files of target</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="文件处理函数"><a href="#文件处理函数" class="headerlink" title="文件处理函数"></a>文件处理函数</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&#x27;findstring&#x27;: Format: $(findstring FIND, IN) </span></span><br><span class="line"><span class="comment"># to find a string.  if find the string, return FIND, else return null</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;wildcard&#x27;；Format: $(wildcard PATTERN) </span></span><br><span class="line"><span class="comment"># list all the file matched the PATTERN. </span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;notdir&#x27;:Format: $(notdir NAMES…) </span></span><br><span class="line"><span class="comment"># delete a filename from the path. </span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;basename&#x27;:Format: $(basename NAMES…) </span></span><br><span class="line"><span class="comment"># get the prefix of the file name. </span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;filter&#x27;:Format: $(filter PATTERN…,TEXT)</span></span><br><span class="line"><span class="comment"># get specified strings which match the pattern . </span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;subset&#x27;: Format: $(subst &lt;from&gt;;,&lt;to&gt;;,&lt;text&gt;;)</span></span><br><span class="line"><span class="comment"># replace the &quot;from&quot; to &quot;to&quot; in the text</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;word&#x27;: Format: $(word N,TEXT)</span></span><br><span class="line"><span class="comment"># get the nth word in text, if N is larger than the number of text, return null, if N is 0, error</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;abspath&#x27;: Format: $(abspath names)</span></span><br><span class="line"><span class="comment"># transfer the path of names to the absolute path, return the transferred result</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;addprefix&#x27;: Format: $(addprefix SUFFIX, NAMES…)</span></span><br><span class="line"><span class="comment"># append the prefix for each file in the file list</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;addsuffix&#x27;: Format: $(addsuffix SUFFIX, NAMES…)</span></span><br><span class="line"><span class="comment"># append the suffix for each file in the file list</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;sort&#x27;: Format: $(sort LIST)</span></span><br><span class="line"><span class="comment"># sort all string in list by alphabet, delete the duplicate string</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;join&#x27;: Format: $(join LIST1,LIST2)</span></span><br><span class="line"><span class="comment"># concatenate the list1 with list2 in order</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="打印信息"><a href="#打印信息" class="headerlink" title="打印信息"></a>打印信息</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&#x27;info&#x27;:  Format: $(info &quot;some text&quot;)</span></span><br><span class="line"><span class="comment">#&quot;info&quot; will print the text without current name of makefile and line number.</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;error&#x27;:  Format: $(error TEXT…)</span></span><br><span class="line"><span class="comment">#&quot;error&quot; will print the text and end the process.</span></span><br><span class="line"></span><br><span class="line"><span class="section">&#x27;warning&#x27;: Format: $(warning TEXT…)</span></span><br><span class="line"><span class="comment">#&quot;warning&quot; will print the text and the process will continue. </span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/Usage%20of%20Makefile/" data-id="cldqsywc10007dovo7t3e3aw6" data-title="About the Makefile syntax and usage" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PA1-regexpr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/PA1-regexpr/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.690Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PA/">PA</a>►<a class="article-category-link" href="/categories/PA/PA1/">PA1</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/PA1-regexpr/">PA1 - 表达式求值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PA1-表达式求值"><a href="#PA1-表达式求值" class="headerlink" title="PA1 表达式求值"></a>PA1 表达式求值</h1><p>终于把PA1.2快做完了,在此记录下几个遇到的问题(方便以后写项目时,搭建好了框架能把细节完善的更好一点)</p>
+<h3 id="PROBLEM-1"><a href="#PROBLEM-1" class="headerlink" title="-PROBLEM 1:"></a>-PROBLEM 1:</h3><p>第一个问题,在cmd_p中我使用了strtok去分割空格来判断输入的命令,但是这样导致在表达式求值中有空格的表达式全部都会被截断,这这里我的处理如下(将截断处’\0’变为’ ‘)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arg[<span class="built_in">strlen</span>(arg)] = <span class="string">&#x27; &#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PROBLEM-2"><a href="#PROBLEM-2" class="headerlink" title="-PROBLEM 2:"></a>-PROBLEM 2:</h3><p>在token分完表达式之后，我尝试用strcpy去将分出的数字字符串复制到tokens.str中，但是很快发现当数字长度不够不一时，长的数字串总是无法被短的字符串覆盖，处理如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> TK_NUM: tokens[nr_token].type = rules[i].token_type;</span><br><span class="line">  <span class="number">114</span>           <span class="comment">//maybe overflow, remember to rewrite the code </span></span><br><span class="line">  <span class="number">115</span>                        <span class="built_in">strncpy</span>(tokens[nr_token].str,substr_start,substr_len); </span><br><span class="line">  <span class="number">116</span>                        tokens[nr_token].str[substr_len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  <span class="number">117</span>                        <span class="comment">//printf(&quot;str is %s\n&quot;, tokens[nr_token].str);</span></span><br><span class="line">  <span class="number">118</span>                        nr_token++;</span><br><span class="line">  <span class="number">119</span>                        assert(position &lt;= <span class="number">32</span>); <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PROBELM-3"><a href="#PROBELM-3" class="headerlink" title="-PROBELM 3:"></a>-PROBELM 3:</h3><p>PA中的括号匹配折磨了我有点久（<strong>现在想起来觉得还是我太菜了</strong>），主要一直纠结于讲义的一个地方，就是括号匹配不成功时但是式子是没问题的情况，去求取表达式的值，想了很久才想出来，写出来的代码感觉like a shit </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">check_parentheses</span><span class="params">(<span class="type">uint32_t</span> begin, <span class="type">uint32_t</span> end)</span>&#123;</span><br><span class="line">  <span class="number">210</span>   <span class="keyword">if</span>(tokens[begin].type != <span class="string">&#x27;(&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">211</span>     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="number">212</span>   &#125;</span><br><span class="line">  <span class="number">213</span> </span><br><span class="line">  <span class="number">214</span>   <span class="type">int</span> outer = <span class="number">0</span>; <span class="comment">// outer is to record whether the out lay is cover by parentheses</span></span><br><span class="line">  <span class="number">215</span>   <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="number">216</span>   <span class="type">char</span> bracket[<span class="number">32</span>] = &#123;<span class="string">&#x27;0&#x27;</span>&#125;;</span><br><span class="line">  <span class="number">217</span>   <span class="type">int</span> inner = <span class="number">0</span>;</span><br><span class="line">  <span class="number">218</span>   <span class="type">int</span> flag = <span class="number">0</span>;</span><br><span class="line">  <span class="number">219</span>   <span class="keyword">if</span> (tokens[begin].type == <span class="string">&#x27;(&#x27;</span> &amp;&amp; tokens[end].type == <span class="string">&#x27;)&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">220</span>     outer = <span class="number">1</span>;</span><br><span class="line">  <span class="number">221</span>   &#125;</span><br><span class="line">  <span class="number">222</span> </span><br><span class="line">  <span class="number">223</span>   <span class="comment">//find every pair of parentheses</span></span><br><span class="line">  <span class="number">224</span>   <span class="keyword">for</span>(<span class="type">int</span> cnt = begin+<span class="number">1</span>; cnt &lt;= end<span class="number">-1</span>;cnt++)&#123;</span><br><span class="line">  <span class="number">225</span>     <span class="keyword">if</span>(tokens[cnt].type == <span class="string">&#x27;(&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">226</span>       bracket[inner] = <span class="string">&#x27;(&#x27;</span>;</span><br><span class="line">  <span class="number">227</span>       inner++;</span><br><span class="line">  <span class="number">228</span>       sum++;</span><br><span class="line">  <span class="number">229</span>     &#125;</span><br><span class="line">  <span class="number">230</span>     <span class="keyword">else</span> <span class="keyword">if</span>(tokens[cnt].type == <span class="string">&#x27;)&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">231</span>       bracket[inner] = <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">  <span class="number">232</span>       inner++;</span><br><span class="line">  <span class="number">233</span>       sum--;</span><br><span class="line">  <span class="number">234</span>     &#125;</span><br><span class="line">  <span class="number">235</span>     <span class="keyword">if</span>(sum &lt; <span class="number">0</span>)&#123;</span><br><span class="line">  <span class="number">236</span>       flag = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="number">238</span>   &#125;</span><br><span class="line">  <span class="number">239</span>   </span><br><span class="line">  <span class="number">240</span>   <span class="keyword">if</span>(flag == <span class="number">1</span> &amp;&amp; outer == <span class="number">1</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;The expression is illegal but has a value\n&quot;</span>);<span class="keyword">return</span> <span class="literal">false</span>;&#125;</span><br><span class="line">  <span class="number">241</span>   <span class="keyword">if</span>(sum &gt; <span class="number">0</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;expression is bad!!!\n&quot;</span>);assert(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="number">242</span>   <span class="keyword">if</span>(sum == <span class="number">0</span> &amp;&amp; bracket[<span class="number">0</span>] == <span class="string">&#x27;0&#x27;</span>)&#123;<span class="keyword">return</span> <span class="literal">true</span>;&#125;</span><br><span class="line">  <span class="number">243</span>   <span class="keyword">if</span>(sum == <span class="number">0</span> &amp;&amp; flag == <span class="number">0</span> &amp;&amp; outer == <span class="number">1</span>)&#123;<span class="keyword">return</span> <span class="literal">true</span>;&#125;</span><br><span class="line">  <span class="number">244</span>   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="number">245</span> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="PROBLEM-4"><a href="#PROBLEM-4" class="headerlink" title="-PROBLEM 4:"></a>-PROBLEM 4:</h3><p>PA1.2编写测试样例中，如何处理多次调用gen函数写入buf中，但是不对buf原来位置的数据覆盖，且在一个case中多次调用gen函数后，如何让buf将这部分数据完整的拷贝到code_buf中，这个也是一个小难点</p>
+<p>这里我的处理是用两个变量，一个length 和 count，count记录总的字符串长度，最大不能超过65535，length则是在每一次gen函数使用后++，在循环当buf+count拷贝到code_buf之后，我们对每一个count &#x3D; count + length，然后再将length归0，然后继续上述操作</p>
+<p><strong>最后，这个PA1.2让我印象最深刻的地方在于，如果你的思路没有非常非常非常清晰，对于每个细节没有深入的理解，千万不要一口气写一大段代码（后果就是在调试上会浪费你无数的时间）</strong></p>
+<hr>
+<h3 id="12-18-一些新的补充"><a href="#12-18-一些新的补充" class="headerlink" title="12.18  一些新的补充"></a><em>12.18  一些新的补充</em></h3><p>这个周终于做到了监视点这个地方(<del>虽然说这周摆了两天</del>),但是为什么没有新开一个博客，是因为监视点只开了一个小头(只把链表的增删查改处理了一下),而且PA1.3第一个任务是表达式扩展，所以直接就在这篇博客下续写</p>
+<p>扩展表达式主要就是解决两个问题：<strong>负数和解指针</strong></p>
+<p>处理这个两个问题就是做如下的这种判断：如果它是第一个位置或者前一个token是运算符，那么这个时候它们就为负数和解指针操作符</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">119</span>           <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: <span class="keyword">if</span>(position == <span class="number">1</span>|| tokens[nr_token<span class="number">-1</span>].type &lt;= TK_EQ)&#123;</span><br><span class="line"><span class="number">120</span>                      tokens[nr_token++].type = MINUS;<span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="number">121</span>                      tokens[nr_token++].type = rules[i].token_type;<span class="keyword">break</span>;</span><br><span class="line"><span class="number">122</span>           <span class="comment">// the sign &#x27;*&#x27; may be the mul or the pointer dereference </span></span><br><span class="line"><span class="number">123</span>           <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>: <span class="keyword">if</span>(position == <span class="number">1</span>|| tokens[nr_token<span class="number">-1</span>].type &lt;= TK_EQ)&#123;</span><br><span class="line"><span class="number">124</span>                      tokens[nr_token++].type = DEREF;<span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="number">125</span>                      tokens[nr_token++].type = rules[i].token_type;<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="还有一些奇怪的问题"><a href="#还有一些奇怪的问题" class="headerlink" title="还有一些奇怪的问题"></a><em>还有一些奇怪的问题</em></h3><p>在实现PA1.2的测试样例后，我发现我表达式求值的代码似乎有的时候会出现一些十分奇怪的bug就比如如下情况:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Welcome to riscv32-NEMU!</span><br><span class="line">For help, type &quot;help&quot;</span><br><span class="line">(nemu) p 1</span><br><span class="line">arg is 1 &#x27;V</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[8] = &quot;[1-9][0-9]*|[1-9]|^0$&quot; at position 0 with len 1: 1</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[0] = &quot; +&quot; at position 1 with len 1:  </span><br><span class="line">[src/monitor/sdb/expr.c:157 make_token] no match at position 2</span><br><span class="line">1 &#x27;V</span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
+<p>我不知道发生了什么，输入了1之后增加了多的字符，而且不仅是长度为1的字符串，当长度为一定值时arg中也会出些一些莫名其妙的字符串导致make_token失败，并且这种错每次都不一样，比如我刚刚又试了一下,它就变成了如下这个样子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[src/monitor/monitor.c:17 welcome] Build time: 17:28:43, Nov 21 2022</span><br><span class="line">Welcome to riscv32-NEMU!</span><br><span class="line">For help, type &quot;help&quot;</span><br><span class="line">(nemu) p 1</span><br><span class="line">arg is 1 </span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[8] = &quot;[1-9][0-9]*|[1-9]|^0$&quot; at position 0 with len 1: 1</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[0] = &quot; +&quot; at position 1 with len 1:  </span><br><span class="line">[src/monitor/sdb/expr.c:157 make_token] no match at position 2</span><br><span class="line">1 </span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
+<p><strong>这个地方我实在不明白哪里有问题,arg不是就是1吗</strong>(后面被这个东西整的没办法，只能战略性的跳过一下，毕竟代码的功能实现是基本没有问题的)</p>
+<p>附上代码(<del>看看有没有好心的大佬帮我提一些思路看看能不能解决</del>)有空看博客的时候可以想想哪里有问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">158</span> <span class="type">static</span> <span class="type">int</span> <span class="title function_">cmd_p</span><span class="params">(<span class="type">char</span> *args)</span>&#123;</span><br><span class="line"><span class="number">159</span>     <span class="type">uint32_t</span> show = <span class="number">0</span>;</span><br><span class="line"><span class="number">160</span>     <span class="type">char</span>* arg = strtok(<span class="literal">NULL</span>, <span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="number">161</span>     <span class="type">bool</span>* success = (<span class="type">bool</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">bool</span>));</span><br><span class="line"><span class="number">162</span>     *success = <span class="literal">true</span>;</span><br><span class="line"><span class="number">163</span> </span><br><span class="line"><span class="number">164</span>     <span class="keyword">if</span>(arg == <span class="literal">NULL</span>)&#123;</span><br><span class="line"><span class="number">165</span>       <span class="comment">/* no argument given */</span></span><br><span class="line"><span class="number">166</span>       <span class="built_in">printf</span>(<span class="string">&quot;%s - %s\n&quot;</span>, cmd_table[<span class="number">6</span>].name, cmd_table[<span class="number">6</span>].description);</span><br><span class="line"><span class="number">167</span>     &#125;</span><br><span class="line"><span class="number">168</span>     <span class="keyword">else</span>&#123;</span><br><span class="line"><span class="number">169</span>       arg[<span class="built_in">strlen</span>(arg)] = <span class="string">&#x27; &#x27;</span>; <span class="comment">// make the string can include the blank</span></span><br><span class="line"><span class="number">170</span>       <span class="built_in">printf</span>(<span class="string">&quot;arg is %s\n&quot;</span>, arg);</span><br><span class="line"><span class="number">171</span>       show = expr(arg,success); <span class="comment">// Expression evaluated</span></span><br><span class="line"><span class="number">172</span>       assert(show &gt;=  <span class="number">0</span>);</span><br><span class="line"><span class="number">173</span>       Log(<span class="string">&quot;the expression value = 0x%x\n&quot;</span>,show);</span><br><span class="line"><span class="number">174</span>     &#125;</span><br><span class="line"><span class="number">175</span>     <span class="built_in">free</span>(success);</span><br><span class="line"><span class="number">176</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">177</span> &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/PA1-regexpr/" data-id="cldqsywc00004dovo348a5sn6" data-title="PA1 - 表达式求值" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PA1 summary" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/PA1%20summary/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.683Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PA/">PA</a>►<a class="article-category-link" href="/categories/PA/PA1/">PA1</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/PA1%20summary/">PA1 - 最后的总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PA1-总结"><a href="#PA1-总结" class="headerlink" title="PA1 总结"></a>PA1 总结</h1><p>PA1终于算是做完了（虽然还有一些小的问题没有解决），所以总结一下遇到的问题以及已经开始的PA2中的一些知识点</p>
+<h3 id="查阅所有的c文件行数的命令："><a href="#查阅所有的c文件行数的命令：" class="headerlink" title="查阅所有的c文件行数的命令："></a>查阅所有的c文件行数的命令：</h3><p>wc -l filename 可以查看文件行数，但是如果我们要对一个目录下查看所有c文件的行数我们则用如下命令组合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; -o -name &quot;*.h&quot; | xargs wc -l</span><br></pre></td></tr></table></figure>
+<p>如果要去掉空格的行数，则是：(grep -v 这里我也没太懂)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find . -name &quot;*.c&quot; -o -name &quot;*.h&quot; | xargs cat|grep -v ^$| wc -l</span><br><span class="line">其中 -v  显示不包含匹配文本的所有行。</span><br><span class="line">^：匹配正则表达式的开始行。</span><br><span class="line">$: 匹配正则表达式的结束行。</span><br></pre></td></tr></table></figure>
+
+<h3 id="c语言struct中位域操作："><a href="#c语言struct中位域操作：" class="headerlink" title="c语言struct中位域操作："></a>c语言struct中位域操作：</h3><p>位域是一种数据结构，可以把数据以二进制位的形式紧凑的存储，它允许程序对此结构的位进行操作<br>例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="type">uint8_t</span> rs : <span class="number">2</span>, rt : <span class="number">2</span>, op : <span class="number">4</span>; &#125; rtype;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> &#123;</span> <span class="type">uint8_t</span> addr : <span class="number">4</span>      , op : <span class="number">4</span>; &#125; mtype;</span><br><span class="line">  <span class="type">uint8_t</span> inst;</span><br><span class="line">&#125; <span class="type">inst_t</span>;</span><br></pre></td></tr></table></figure>
+<p>图中rs : 2 就是位域操作（rs最大表示bit表示数）<br>这是PA2.1简单模拟器程序的一个例子，通过union模拟指令等长，然后再通过位域和结构体模拟不同类型的指令（十分巧妙，值得学习的例子）</p>
+<h2 id="riscv-32的一些基本知识"><a href="#riscv-32的一些基本知识" class="headerlink" title="riscv-32的一些基本知识"></a>riscv-32的一些基本知识</h2><h3 id="Base-Instruction-Format"><a href="#Base-Instruction-Format" class="headerlink" title="Base Instruction Format:"></a>Base Instruction Format:</h3><pre><code>R-type funct7 rs2 rs1 funct3 rd opcode (register-to-register)
+I-type imm[11:0] rs1 funct3 rd opcode (register-to-immediate)
+S-type
+U-type
+(前面四种是基本格式)
+B-type (conditional branch)
+J-type (unconditional jump)
+(B/J是两种变体)
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/PA1%20summary/" data-id="cldqsywbz0003dovodxup0miv" data-title="PA1 - 最后的总结" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-Nand2Teteris 0-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/Nand2Teteris%200-3/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.669Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Nand2Teteris/">Nand2Teteris</a>►<a class="article-category-link" href="/categories/Nand2Teteris/Project0-6/">Project0-6</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/Nand2Teteris%200-3/">Nand2Teteris Beginning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Nand2Teteris-关于计算机组成"><a href="#Nand2Teteris-关于计算机组成" class="headerlink" title="Nand2Teteris 关于计算机组成"></a>Nand2Teteris 关于计算机组成</h1><p>因为大学前两年专业学习的并不好，所以这个寒假打算从头夯实计算机基础，刚好在《CS自学指南》中看中了这门课，它的介绍语如下:</p>
+<blockquote>
+<p>Coursera 上被数万人评为满分，在全球四百多所高校、高中被采用，让一个完全没有计算机基础的人从与非门开始造一台计算机，并在上面运行俄罗斯方块小游戏。</p>
+<p>听起来就很酷对不对？实现起来更酷！这门课分为硬件和软件两个部分。在硬件部分，你将进入 01 的世界，用与非门构造出逻辑电路，并逐步搭建出一个 CPU 来运行一套课程作者定义的简易汇编代码。在软件部分，你将编写一个编译器，将作者开发的一个名为Jack的高级语言编译为可以运行在虚拟机上的字节码，然后进一步翻译为汇编代码。你还将开发一个简易的 OS，让你的计算机支持输入输出图形界面。至此，你可以用 Jack 开发一个俄罗斯方块的小游戏，将它编译为汇编代码，运行在你用与非门搭建出的 CPU 上，通过你开发的 OS 进行交互。学完这门课程，你将对整个计算机的体系结构有一个全局且深刻的理解，对于你后续课程的学习有着莫大的帮助。</p>
+<p>你也许会担心课程会不会很难，但这门课面向的人群是完全没有计算机基础的人，课程作者的目标是让高中生都能理解。因此，只要你按部就班跟着课程规划走，一个月内学完应该绰绰有余。麻雀虽小但是五脏俱全，这门课很好地提取出了计算机的本质，而不过多地陷于现代计算机为了性能而设计出的众多复杂细节。让学习者能在轻松愉快的学习体验中感受计算机的优雅与神奇。</p>
+</blockquote>
+<p>看完这个地方我挺激动的，完全从零开始搭建一个计算机，这也太棒了，但是同样的，我对这门课也有些自己的怀疑。（计算机组成原理这么难，从零开始搭建会不会根本不可能）但是还是抱着试一试的心态开始了这门课。</p>
+<p>结果就是：听完Section 1和完成Project 1后，很快搭建了16位的与或非门，以及16位的选择器和解复用器(Dmux),这里其实还没有什么，很快在听完了Section 2之后我发现之前对我来说神秘不已的ALU的底层结构我居然可以很快地将它搭建出来（本质是多个16位的Mux的组合），我第一次发现原来底层的原理其实也并不怎么难，然后同样的很快的听完了Section 3之后我发现RAM我也可以实现了！！！！(时序电路的记忆功能先实现1Bit的读写然后到Register，RAM8，最后到RAM16k),<strong>我的老天爷，为什么不让我早点遇到这个课</strong>(当然我这一周就做到Projec 3,后面的课也不好说，到时候再回过头来做个总结)</p>
+<hr>
+<h2 id="Project-4-6-新的补充"><a href="#Project-4-6-新的补充" class="headerlink" title="Project 4-6(新的补充)"></a>Project 4-6(新的补充)</h2><p>到目前算是基本完成了nand2tetris的hardware部分，这其中Project5和Project6都有一定难度，第五部分主要是让你完成一个CPU,第六部分则是写一个类似于汇编语言（但是比汇编语言简单）的编译器。CPU部分主要是要注意A instruction 与　C instruction 的不同情况（选择器真的是CPU一个很重要的部分）<br>编译器主要注意下有符号时需要预处理符号表的问题，总体来说也不算太难，只要肯花时间这门课一定会让你有一个特别nice的收获！！！</p>
+<p><strong>最后只想说,Nand2Teteris值得每一个计算机专业的学生去学一学，这门课相比于学校的计算机底层理论来说将会把你的底层知识弄得无比清晰与坚实</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/Nand2Teteris%200-3/" data-id="cldqsywbw0001dovo1bhi07wi" data-title="Nand2Teteris Beginning" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-CS61A-hw03" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/CS61A-hw03/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.662Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CS61A/">CS61A</a>►<a class="article-category-link" href="/categories/CS61A/hw/">hw</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/CS61A-hw03/">hw03 Anonymous_factorial</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>最近正在做CS61A中的实验,在hw03遇到了一个很有意思的问题, 题目如下</p>
+<blockquote>
+<p>Q6: Anonymous factorial</p>
+<p>The recursive factorial function can be written as a single expression by using a conditional expression.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>fact = <span class="keyword">lambda</span> n: <span class="number">1</span> <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">else</span> mul(n, fact(sub(n, <span class="number">1</span>)))&#125;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>fact(<span class="number">5</span>)</span><br><span class="line"><span class="number">120</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>However, this implementation relies on the fact (no pun intended) that fact has a name, to which we refer in the body of fact. To write a recursive function, we have always given it a name using a def or assignment statement so that we can refer to the function within its own body. In this question, your job is to define fact recursively without giving it a name!</p>
+<p>Write an expression that computes n factorial using only call expressions, conditional expressions, and lambda expressions (no assignment or def statements). Note in particular that you are not allowed to use make_anonymous_factorial in your return expression. The sub and mul functions from the operator module are the only built-in functions required to solve this problem:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> sub, mul</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_anonymous_factorial</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Return the value of an expression that computes factorial.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; make_anonymous_factorial()(5)</span></span><br><span class="line"><span class="string">    120</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; from construct_check import check</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; # ban any assignments or recursion</span></span><br><span class="line"><span class="string">    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#x27;make_anonymous_factorial&#x27;, [&#x27;Assign&#x27;, &#x27;AugAssign&#x27;, &#x27;FunctionDef&#x27;, &#x27;Recursion&#x27;])</span></span><br><span class="line"><span class="string">    True</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;YOUR_EXPRESSION_HERE&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个问题其实难度并不是很大,就是一个很简单的递归的思路, 有趣的地方在于让你只用匿名的函数去完成递归的实现,且你不能使用make_anonymous_factorial这个函数</p>
+<p>一开始想直接这么写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">lambda</span> f: <span class="keyword">lambda</span> n: <span class="number">1</span> <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">else</span> mul(n,f(n-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p>但是返回的结果是一个函数，并没有返回值给我</p>
+<p>后面想了想，看了make_anonymous_factorial这个函数的调用方式，传的两个参数第一个是空，第二个是数 , 所以</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> (<span class="keyword">lambda</span> f:f(f))(<span class="keyword">lambda</span> f:<span class="keyword">lambda</span> n: <span class="number">1</span> <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">else</span> mul(n, f(f)(n-<span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>这个是为了将lambda f 视为一个函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lambda</span> f:f(f)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/CS61A-hw03/" data-id="cldqsywbs0000dovof5xjdq67" data-title="hw03 Anonymous_factorial" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-PA2 riscv32 instrucion" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/PA2%20riscv32%20instrucion/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.660Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PA/">PA</a>►<a class="article-category-link" href="/categories/PA/PA2/">PA2</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/PA2%20riscv32%20instrucion/">PA2 - Some RISCV-32 pseudo instrucions</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="RISCV-32-pseudo-instrucion"><a href="#RISCV-32-pseudo-instrucion" class="headerlink" title="RISCV-32 pseudo instrucion"></a>RISCV-32 pseudo instrucion</h1><p>the <em>riscv-spec</em> doesn’t make the pseudo instructions in the instruction list, so i search the web and make a summary about the pseudo instrucions(It also helps me to find the pseudo instructions)</p>
+<h2 id="Pseudo-instruction"><a href="#Pseudo-instruction" class="headerlink" title="Pseudo instruction"></a>Pseudo instruction</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">la rd, symbol 	auipc rd, symbol[31:12]; addi rd, rd, symbol[11:0]</span><br><span class="line">l&#123;b,h,w,d&#125; rd, symbol 	auipc rd, symbol[31:12]; l&#123;b,h,w,d&#125; rd, symbol[11:0](rd)</span><br><span class="line">s&#123;b,h,w,d&#125; rd, symbol, rt 	auipc rt, symbol[31:12]; s&#123;b,h,w,d&#125; rd, symbol[11:0](rt)</span><br><span class="line">fl&#123;w,d&#125; rd, symbol, rt 	auipc rt, symbol[31:12]; fl&#123;w,d&#125; rd, symbol[11:0](rt)</span><br><span class="line">fs&#123;w,d&#125; rd, symbol, rt 	auipc rt, symbol[31:12]; fs&#123;w,d&#125; rd, symbol[11:0](rt)</span><br><span class="line">nop 	addi x0, x0, 0</span><br><span class="line">li rd, immediate 	myriad sequences</span><br><span class="line">mv rd, rs 	addi rd, rs, 0</span><br><span class="line">not rd, rs 	xori rd, rs, -1</span><br><span class="line">neg rd, rs 	sub rd, x0, rs</span><br><span class="line">negw rd, rs 	subw rd, x0, rs</span><br><span class="line">sext.b rd, rs 	slli rd, rs, XLEN - 8; srai rd, rd, XLEN - 8</span><br><span class="line">sext.h rd, rs 	slli rd, rs, XLEN - 16; srai rd, rd, XLEN - 16</span><br><span class="line">sext.w rd, rs 	addiw rd, rs, 0</span><br><span class="line">zext.b rd, rs 	andi rd, rs, 255</span><br><span class="line">zext.h rd, rs 	slli rd, rs, XLEN - 16; srli rd, rd, XLEN - 16</span><br><span class="line">zext.w rd, rs 	slli rd, rs, XLEN - 32; srli rd, rd, XLEN - 32</span><br><span class="line">seqz rd, rs 	sltiu rd, rs, 1</span><br><span class="line">snez rd, rs 	sltu rd, x0, rs</span><br><span class="line">sltz rd, rs 	slt rd, rs, x0</span><br><span class="line">sgtz rd, rs 	slt rd, x0, rs</span><br><span class="line">beqz rs, offset 	beq rs, x0, offset</span><br><span class="line">bnez rs, offset 	bne rs, x0, offset</span><br><span class="line">blez rs, offset 	bge x0, rs, offset</span><br><span class="line">bgez rs, offset 	bge rs, x0, offset</span><br><span class="line">bltz rs, offset 	blt rs, x0, offset</span><br><span class="line">bgtz rs, offset 	blt x0, rs, offset</span><br><span class="line">bgt rs, rt, offset 	blt rt, rs, offset</span><br><span class="line">ble rs, rt, offset 	bge rt, rs, offset</span><br><span class="line">bgtu rs, rt, offset 	bltu rt, rs, offset</span><br><span class="line">bleu rs, rt, offset 	bgeu rt, rs, offset</span><br><span class="line">j offset 	jal x0, offset</span><br><span class="line">jal offset 	jal x1, offset</span><br><span class="line">jr rs 	jalr x0, rs, 0</span><br><span class="line">jalr rs 	jalr x1, rs, 0</span><br><span class="line">ret 	jalr x0, x1, 0</span><br><span class="line">call offset 	auipc x6, offset[31:12]; jalr x1, x6, offset[11:0]</span><br><span class="line">tail offset 	auipc x6, offset[31:12]; jalr x0, x6, offset[11:0]</span><br><span class="line">fence 	fence iorw, iorw</span><br></pre></td></tr></table></figure>
+
+<h2 id="Thinking-after-completion"><a href="#Thinking-after-completion" class="headerlink" title="Thinking after completion"></a>Thinking after completion</h2><p>Actually, A better way to igure out what real instruction to replace the<br>pseudo instruction is to read its disassemble code, then compare the machine code  with the manual <strong>(That’s a efficient method because some pseudo instructions are difficult to find by search engining)</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/PA2%20riscv32%20instrucion/" data-id="cldqsywc00005dovoefuq24yj" data-title="PA2 - Some RISCV-32 pseudo instrucions" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:15:27.439Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/02/05/hello-world/">CserYcx&#39;s Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to CserYcx’s Blog! This is my first blog. And I wanna to post some programming experience and problems solution.Maybe you’ve seen that and thought the author English is suck.Sorry, my native language is not English.Why I use the English to write the Blog is just wanna to improve my English.But I also will use Chinese to write the blog. </p>
+<p><strong>OK,Let’s see the following post!!!!!!</strong></p>
+<h1 id="The-PA"><a href="#The-PA" class="headerlink" title="The PA"></a>The PA</h1><p><em>More info: Being building</em></p>
+<h1 id="The-CS61A"><a href="#The-CS61A" class="headerlink" title="The CS61A"></a>The CS61A</h1><p><em>More info: Being building</em> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/hello-world/" data-id="cldqsywc20008dovohhamhh3o" data-title="CserYcx&#39;s Hello World" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/">CS61A</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/hw/">hw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/">Nand2Teteris</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/Project0-6/">Project0-6</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/">PA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA1/">PA1</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA2/">PA2</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/05/Usage%20of%20Makefile/">About the Makefile syntax and usage</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/PA1-regexpr/">PA1 - 表达式求值</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/PA1%20summary/">PA1 - 最后的总结</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/Nand2Teteris%200-3/">Nand2Teteris Beginning</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/CS61A-hw03/">hw03 Anonymous_factorial</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

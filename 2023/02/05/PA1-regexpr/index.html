@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>PA1 - 表达式求值 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="PA1 表达式求值终于把PA1.2快做完了,在此记录下几个遇到的问题(方便以后写项目时,搭建好了框架能把细节完善的更好一点) -PROBLEM 1:第一个问题,在cmd_p中我使用了strtok去分割空格来判断输入的命令,但是这样导致在表达式求值中有空格的表达式全部都会被截断,这这里我的处理如下(将截断处’\0’变为’ ‘) 1arg[strlen(arg)] &#x3D; &amp;#x27; &amp;#x27;;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PA1 - 表达式求值">
+<meta property="og:url" content="http://example.com/2023/02/05/PA1-regexpr/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PA1 表达式求值终于把PA1.2快做完了,在此记录下几个遇到的问题(方便以后写项目时,搭建好了框架能把细节完善的更好一点) -PROBLEM 1:第一个问题,在cmd_p中我使用了strtok去分割空格来判断输入的命令,但是这样导致在表达式求值中有空格的表达式全部都会被截断,这这里我的处理如下(将截断处’\0’变为’ ‘) 1arg[strlen(arg)] &#x3D; &amp;#x27; &amp;#x27;;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-05T01:29:55.690Z">
+<meta property="article:modified_time" content="2022-12-18T12:48:32.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-PA1-regexpr" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/02/05/PA1-regexpr/" class="article-date">
+  <time class="dt-published" datetime="2023-02-05T01:29:55.690Z" itemprop="datePublished">2023-02-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/PA/">PA</a>►<a class="article-category-link" href="/categories/PA/PA1/">PA1</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      PA1 - 表达式求值
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PA1-表达式求值"><a href="#PA1-表达式求值" class="headerlink" title="PA1 表达式求值"></a>PA1 表达式求值</h1><p>终于把PA1.2快做完了,在此记录下几个遇到的问题(方便以后写项目时,搭建好了框架能把细节完善的更好一点)</p>
+<h3 id="PROBLEM-1"><a href="#PROBLEM-1" class="headerlink" title="-PROBLEM 1:"></a>-PROBLEM 1:</h3><p>第一个问题,在cmd_p中我使用了strtok去分割空格来判断输入的命令,但是这样导致在表达式求值中有空格的表达式全部都会被截断,这这里我的处理如下(将截断处’\0’变为’ ‘)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arg[<span class="built_in">strlen</span>(arg)] = <span class="string">&#x27; &#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PROBLEM-2"><a href="#PROBLEM-2" class="headerlink" title="-PROBLEM 2:"></a>-PROBLEM 2:</h3><p>在token分完表达式之后，我尝试用strcpy去将分出的数字字符串复制到tokens.str中，但是很快发现当数字长度不够不一时，长的数字串总是无法被短的字符串覆盖，处理如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> TK_NUM: tokens[nr_token].type = rules[i].token_type;</span><br><span class="line">  <span class="number">114</span>           <span class="comment">//maybe overflow, remember to rewrite the code </span></span><br><span class="line">  <span class="number">115</span>                        <span class="built_in">strncpy</span>(tokens[nr_token].str,substr_start,substr_len); </span><br><span class="line">  <span class="number">116</span>                        tokens[nr_token].str[substr_len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">  <span class="number">117</span>                        <span class="comment">//printf(&quot;str is %s\n&quot;, tokens[nr_token].str);</span></span><br><span class="line">  <span class="number">118</span>                        nr_token++;</span><br><span class="line">  <span class="number">119</span>                        assert(position &lt;= <span class="number">32</span>); <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PROBELM-3"><a href="#PROBELM-3" class="headerlink" title="-PROBELM 3:"></a>-PROBELM 3:</h3><p>PA中的括号匹配折磨了我有点久（<strong>现在想起来觉得还是我太菜了</strong>），主要一直纠结于讲义的一个地方，就是括号匹配不成功时但是式子是没问题的情况，去求取表达式的值，想了很久才想出来，写出来的代码感觉like a shit </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">check_parentheses</span><span class="params">(<span class="type">uint32_t</span> begin, <span class="type">uint32_t</span> end)</span>&#123;</span><br><span class="line">  <span class="number">210</span>   <span class="keyword">if</span>(tokens[begin].type != <span class="string">&#x27;(&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">211</span>     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="number">212</span>   &#125;</span><br><span class="line">  <span class="number">213</span> </span><br><span class="line">  <span class="number">214</span>   <span class="type">int</span> outer = <span class="number">0</span>; <span class="comment">// outer is to record whether the out lay is cover by parentheses</span></span><br><span class="line">  <span class="number">215</span>   <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">  <span class="number">216</span>   <span class="type">char</span> bracket[<span class="number">32</span>] = &#123;<span class="string">&#x27;0&#x27;</span>&#125;;</span><br><span class="line">  <span class="number">217</span>   <span class="type">int</span> inner = <span class="number">0</span>;</span><br><span class="line">  <span class="number">218</span>   <span class="type">int</span> flag = <span class="number">0</span>;</span><br><span class="line">  <span class="number">219</span>   <span class="keyword">if</span> (tokens[begin].type == <span class="string">&#x27;(&#x27;</span> &amp;&amp; tokens[end].type == <span class="string">&#x27;)&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">220</span>     outer = <span class="number">1</span>;</span><br><span class="line">  <span class="number">221</span>   &#125;</span><br><span class="line">  <span class="number">222</span> </span><br><span class="line">  <span class="number">223</span>   <span class="comment">//find every pair of parentheses</span></span><br><span class="line">  <span class="number">224</span>   <span class="keyword">for</span>(<span class="type">int</span> cnt = begin+<span class="number">1</span>; cnt &lt;= end<span class="number">-1</span>;cnt++)&#123;</span><br><span class="line">  <span class="number">225</span>     <span class="keyword">if</span>(tokens[cnt].type == <span class="string">&#x27;(&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">226</span>       bracket[inner] = <span class="string">&#x27;(&#x27;</span>;</span><br><span class="line">  <span class="number">227</span>       inner++;</span><br><span class="line">  <span class="number">228</span>       sum++;</span><br><span class="line">  <span class="number">229</span>     &#125;</span><br><span class="line">  <span class="number">230</span>     <span class="keyword">else</span> <span class="keyword">if</span>(tokens[cnt].type == <span class="string">&#x27;)&#x27;</span>)&#123;</span><br><span class="line">  <span class="number">231</span>       bracket[inner] = <span class="string">&#x27;)&#x27;</span>;</span><br><span class="line">  <span class="number">232</span>       inner++;</span><br><span class="line">  <span class="number">233</span>       sum--;</span><br><span class="line">  <span class="number">234</span>     &#125;</span><br><span class="line">  <span class="number">235</span>     <span class="keyword">if</span>(sum &lt; <span class="number">0</span>)&#123;</span><br><span class="line">  <span class="number">236</span>       flag = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="number">238</span>   &#125;</span><br><span class="line">  <span class="number">239</span>   </span><br><span class="line">  <span class="number">240</span>   <span class="keyword">if</span>(flag == <span class="number">1</span> &amp;&amp; outer == <span class="number">1</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;The expression is illegal but has a value\n&quot;</span>);<span class="keyword">return</span> <span class="literal">false</span>;&#125;</span><br><span class="line">  <span class="number">241</span>   <span class="keyword">if</span>(sum &gt; <span class="number">0</span>)&#123;<span class="built_in">printf</span>(<span class="string">&quot;expression is bad!!!\n&quot;</span>);assert(<span class="number">0</span>);&#125;</span><br><span class="line">  <span class="number">242</span>   <span class="keyword">if</span>(sum == <span class="number">0</span> &amp;&amp; bracket[<span class="number">0</span>] == <span class="string">&#x27;0&#x27;</span>)&#123;<span class="keyword">return</span> <span class="literal">true</span>;&#125;</span><br><span class="line">  <span class="number">243</span>   <span class="keyword">if</span>(sum == <span class="number">0</span> &amp;&amp; flag == <span class="number">0</span> &amp;&amp; outer == <span class="number">1</span>)&#123;<span class="keyword">return</span> <span class="literal">true</span>;&#125;</span><br><span class="line">  <span class="number">244</span>   <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="number">245</span> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="PROBLEM-4"><a href="#PROBLEM-4" class="headerlink" title="-PROBLEM 4:"></a>-PROBLEM 4:</h3><p>PA1.2编写测试样例中，如何处理多次调用gen函数写入buf中，但是不对buf原来位置的数据覆盖，且在一个case中多次调用gen函数后，如何让buf将这部分数据完整的拷贝到code_buf中，这个也是一个小难点</p>
+<p>这里我的处理是用两个变量，一个length 和 count，count记录总的字符串长度，最大不能超过65535，length则是在每一次gen函数使用后++，在循环当buf+count拷贝到code_buf之后，我们对每一个count &#x3D; count + length，然后再将length归0，然后继续上述操作</p>
+<p><strong>最后，这个PA1.2让我印象最深刻的地方在于，如果你的思路没有非常非常非常清晰，对于每个细节没有深入的理解，千万不要一口气写一大段代码（后果就是在调试上会浪费你无数的时间）</strong></p>
+<hr>
+<h3 id="12-18-一些新的补充"><a href="#12-18-一些新的补充" class="headerlink" title="12.18  一些新的补充"></a><em>12.18  一些新的补充</em></h3><p>这个周终于做到了监视点这个地方(<del>虽然说这周摆了两天</del>),但是为什么没有新开一个博客，是因为监视点只开了一个小头(只把链表的增删查改处理了一下),而且PA1.3第一个任务是表达式扩展，所以直接就在这篇博客下续写</p>
+<p>扩展表达式主要就是解决两个问题：<strong>负数和解指针</strong></p>
+<p>处理这个两个问题就是做如下的这种判断：如果它是第一个位置或者前一个token是运算符，那么这个时候它们就为负数和解指针操作符</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">119</span>           <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>: <span class="keyword">if</span>(position == <span class="number">1</span>|| tokens[nr_token<span class="number">-1</span>].type &lt;= TK_EQ)&#123;</span><br><span class="line"><span class="number">120</span>                      tokens[nr_token++].type = MINUS;<span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="number">121</span>                      tokens[nr_token++].type = rules[i].token_type;<span class="keyword">break</span>;</span><br><span class="line"><span class="number">122</span>           <span class="comment">// the sign &#x27;*&#x27; may be the mul or the pointer dereference </span></span><br><span class="line"><span class="number">123</span>           <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>: <span class="keyword">if</span>(position == <span class="number">1</span>|| tokens[nr_token<span class="number">-1</span>].type &lt;= TK_EQ)&#123;</span><br><span class="line"><span class="number">124</span>                      tokens[nr_token++].type = DEREF;<span class="keyword">break</span>;&#125;</span><br><span class="line"><span class="number">125</span>                      tokens[nr_token++].type = rules[i].token_type;<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="还有一些奇怪的问题"><a href="#还有一些奇怪的问题" class="headerlink" title="还有一些奇怪的问题"></a><em>还有一些奇怪的问题</em></h3><p>在实现PA1.2的测试样例后，我发现我表达式求值的代码似乎有的时候会出现一些十分奇怪的bug就比如如下情况:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Welcome to riscv32-NEMU!</span><br><span class="line">For help, type &quot;help&quot;</span><br><span class="line">(nemu) p 1</span><br><span class="line">arg is 1 &#x27;V</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[8] = &quot;[1-9][0-9]*|[1-9]|^0$&quot; at position 0 with len 1: 1</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[0] = &quot; +&quot; at position 1 with len 1:  </span><br><span class="line">[src/monitor/sdb/expr.c:157 make_token] no match at position 2</span><br><span class="line">1 &#x27;V</span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
+<p>我不知道发生了什么，输入了1之后增加了多的字符，而且不仅是长度为1的字符串，当长度为一定值时arg中也会出些一些莫名其妙的字符串导致make_token失败，并且这种错每次都不一样，比如我刚刚又试了一下,它就变成了如下这个样子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[src/monitor/monitor.c:17 welcome] Build time: 17:28:43, Nov 21 2022</span><br><span class="line">Welcome to riscv32-NEMU!</span><br><span class="line">For help, type &quot;help&quot;</span><br><span class="line">(nemu) p 1</span><br><span class="line">arg is 1 </span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[8] = &quot;[1-9][0-9]*|[1-9]|^0$&quot; at position 0 with len 1: 1</span><br><span class="line">[src/monitor/sdb/expr.c:103 make_token] match rules[0] = &quot; +&quot; at position 1 with len 1:  </span><br><span class="line">[src/monitor/sdb/expr.c:157 make_token] no match at position 2</span><br><span class="line">1 </span><br><span class="line">  ^</span><br></pre></td></tr></table></figure>
+<p><strong>这个地方我实在不明白哪里有问题,arg不是就是1吗</strong>(后面被这个东西整的没办法，只能战略性的跳过一下，毕竟代码的功能实现是基本没有问题的)</p>
+<p>附上代码(<del>看看有没有好心的大佬帮我提一些思路看看能不能解决</del>)有空看博客的时候可以想想哪里有问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">158</span> <span class="type">static</span> <span class="type">int</span> <span class="title function_">cmd_p</span><span class="params">(<span class="type">char</span> *args)</span>&#123;</span><br><span class="line"><span class="number">159</span>     <span class="type">uint32_t</span> show = <span class="number">0</span>;</span><br><span class="line"><span class="number">160</span>     <span class="type">char</span>* arg = strtok(<span class="literal">NULL</span>, <span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="number">161</span>     <span class="type">bool</span>* success = (<span class="type">bool</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">bool</span>));</span><br><span class="line"><span class="number">162</span>     *success = <span class="literal">true</span>;</span><br><span class="line"><span class="number">163</span> </span><br><span class="line"><span class="number">164</span>     <span class="keyword">if</span>(arg == <span class="literal">NULL</span>)&#123;</span><br><span class="line"><span class="number">165</span>       <span class="comment">/* no argument given */</span></span><br><span class="line"><span class="number">166</span>       <span class="built_in">printf</span>(<span class="string">&quot;%s - %s\n&quot;</span>, cmd_table[<span class="number">6</span>].name, cmd_table[<span class="number">6</span>].description);</span><br><span class="line"><span class="number">167</span>     &#125;</span><br><span class="line"><span class="number">168</span>     <span class="keyword">else</span>&#123;</span><br><span class="line"><span class="number">169</span>       arg[<span class="built_in">strlen</span>(arg)] = <span class="string">&#x27; &#x27;</span>; <span class="comment">// make the string can include the blank</span></span><br><span class="line"><span class="number">170</span>       <span class="built_in">printf</span>(<span class="string">&quot;arg is %s\n&quot;</span>, arg);</span><br><span class="line"><span class="number">171</span>       show = expr(arg,success); <span class="comment">// Expression evaluated</span></span><br><span class="line"><span class="number">172</span>       assert(show &gt;=  <span class="number">0</span>);</span><br><span class="line"><span class="number">173</span>       Log(<span class="string">&quot;the expression value = 0x%x\n&quot;</span>,show);</span><br><span class="line"><span class="number">174</span>     &#125;</span><br><span class="line"><span class="number">175</span>     <span class="built_in">free</span>(success);</span><br><span class="line"><span class="number">176</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">177</span> &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/02/05/PA1-regexpr/" data-id="cldqsywc00004dovo348a5sn6" data-title="PA1 - 表达式求值" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/02/05/Usage%20of%20Makefile/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          About the Makefile syntax and usage
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/02/05/PA1%20summary/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PA1 - 最后的总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/">CS61A</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CS61A/hw/">hw</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/">Nand2Teteris</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Nand2Teteris/Project0-6/">Project0-6</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/">PA</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA1/">PA1</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/PA/PA2/">PA2</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tools/">Tools</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/02/05/Usage%20of%20Makefile/">About the Makefile syntax and usage</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/PA1-regexpr/">PA1 - 表达式求值</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/PA1%20summary/">PA1 - 最后的总结</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/Nand2Teteris%200-3/">Nand2Teteris Beginning</a>
+          </li>
+        
+          <li>
+            <a href="/2023/02/05/CS61A-hw03/">hw03 Anonymous_factorial</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
